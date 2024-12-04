@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `other_crates/bones_matchmaker/src/matchmaker.rs`."><title>matchmaker.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bones_matchmaker" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `other_crates/bones_matchmaker/src/matchmaker.rs`."><title>matchmaker.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bones_matchmaker" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -143,247 +143,149 @@
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-<a href="#172" id="172">172</a>
-<a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>bevy_tasks::IoTaskPool;
-<span class="kw">use </span>bones_matchmaker_proto::{MatchInfo, MatchmakerRequest, MatchmakerResponse};
-<span class="kw">use </span>futures_lite::future;
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">super</span>::lobbies::{handle_create_lobby, handle_join_lobby, handle_list_lobbies};
+<span class="kw">use </span><span class="kw">super</span>::matchmaking::{handle_request_matchaking, handle_stop_matchmaking};
+<span class="kw">use </span><span class="kw">crate</span>::helpers::generate_random_seed;
+<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>bones_matchmaker_proto::{
+    GameID, LobbyId, LobbyInfo, MatchInfo, MatchmakerRequest, MatchmakerResponse,
+    PlayerIdxAssignment,
+};
+<span class="kw">use </span>iroh_net::{Endpoint, NodeAddr};
 <span class="kw">use </span>once_cell::sync::Lazy;
-<span class="kw">use </span>quinn::{Connection, ConnectionError};
-<span class="kw">use </span>scc::HashMap;
+<span class="kw">use </span>quinn::Connection;
+<span class="kw">use </span>rand::{prelude::SliceRandom, SeedableRng};
+<span class="kw">use </span>scc::HashMap <span class="kw">as </span>SccHashMap;
+<span class="kw">use </span>std::cmp::Ordering;
+<span class="kw">use </span>std::collections::HashMap;
+<span class="kw">use </span>std::sync::Arc;
+<span class="kw">use </span>tokio::sync::Mutex;
 
-<span class="kw">use </span><span class="kw">crate</span>::proxy::start_proxy;
-
-<span class="kw">pub async fn </span>handle_connection(conn: Connection) {
-    <span class="kw">let </span>connection_id = conn.stable_id();
-    <span class="macro">debug!</span>(connection_id, <span class="string">&quot;Accepted matchmaker connection&quot;</span>);
-
-    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = impl_matchmaker(conn).<span class="kw">await </span>{
-        <span class="kw">match </span>e.downcast::&lt;ConnectionError&gt;() {
-            <span class="prelude-val">Ok</span>(conn_err) =&gt; <span class="kw">match </span>conn_err {
-                ConnectionError::ApplicationClosed(e) =&gt; {
-                    <span class="macro">debug!</span>(connection_id, <span class="string">&quot;Application close connection: {e:?}&quot;</span>);
-                }
-                e =&gt; {
-                    <span class="macro">error!</span>(connection_id, <span class="string">&quot;Error in matchmaker connection: {e:?}&quot;</span>);
-                }
-            },
-            <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">error!</span>(connection_id, <span class="string">&quot;Error in matchmaker connection: {e:?}&quot;</span>);
-            }
-        }
-    }
+<span class="doccomment">/// Represents the lobbies for a specific game
+</span><span class="kw">pub struct </span>GameLobbies {
+    <span class="attr">#[allow(dead_code)]
+    </span><span class="kw">pub </span>game_id: GameID,
+    <span class="kw">pub </span>lobbies: HashMap&lt;LobbyId, LobbyInfo&gt;,
 }
 
-<span class="doccomment">/// The matchmaker state
+<span class="doccomment">/// Represents the global state of the matchmaker
 </span><span class="attr">#[derive(Default)]
-</span><span class="kw">struct </span>State {
-    <span class="doccomment">/// The mapping of match info to the vector connected clients in the waiting room.
-    </span>rooms: HashMap&lt;MatchInfo, Vec&lt;Connection&gt;&gt;,
+</span><span class="kw">pub struct </span>State {
+    <span class="kw">pub </span>game_lobbies: HashMap&lt;GameID, GameLobbies&gt;,
+    <span class="kw">pub </span>lobby_connections: SccHashMap&lt;(GameID, LobbyId), Vec&lt;Connection&gt;&gt;,
+    <span class="kw">pub </span>matchmaking_rooms: SccHashMap&lt;MatchInfo, Vec&lt;Connection&gt;&gt;,
 }
 
-<span class="kw">static </span>STATE: Lazy&lt;State&gt; = Lazy::new(State::default);
+<span class="doccomment">/// Global state of the matchmaker
+</span><span class="kw">pub static </span>MATCHMAKER_STATE: Lazy&lt;Arc&lt;Mutex&lt;State&gt;&gt;&gt; =
+    Lazy::new(|| Arc::new(Mutex::new(State::default())));
 
-<span class="doccomment">/// After a matchmaker connection is established, it will open a bi-directional channel with the
-/// client.
-///
-/// At this point the client is free to engage in the matchmaking protocol over that channel.
-</span><span class="kw">async fn </span>impl_matchmaker(conn: Connection) -&gt; anyhow::Result&lt;()&gt; {
+<span class="doccomment">/// Handles incoming connections and routes requests to appropriate handlers
+</span><span class="kw">pub async fn </span>handle_connection(ep: Endpoint, conn: Connection) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">let </span>connection_id = conn.stable_id();
-
     <span class="kw">loop </span>{
-        <span class="comment">// Get the next channel open or connection close event
-        </span><span class="kw">let </span>event = future::or(<span class="kw">async </span>{ either::Left(conn.closed().<span class="kw">await</span>) }, <span class="kw">async </span>{
-            either::Right(conn.accept_bi().<span class="kw">await</span>)
-        })
-        .<span class="kw">await</span>;
-
-        <span class="kw">match </span>event {
-            either::Either::Left(close) =&gt; {
-                <span class="macro">debug!</span>(<span class="string">&quot;Connection closed {close:?}&quot;</span>);
+        <span class="macro">tokio::select!</span> {
+            <span class="kw">_ </span>= conn.closed() =&gt; {
+                <span class="macro">info!</span>(<span class="string">"[{}] Client closed connection."</span>, connection_id);
                 <span class="kw">return </span><span class="prelude-val">Ok</span>(());
             }
-            either::Either::Right(bi) =&gt; {
+            bi = conn.accept_bi() =&gt; {
                 <span class="kw">let </span>(<span class="kw-2">mut </span>send, <span class="kw-2">mut </span>recv) = bi<span class="question-mark">?</span>;
+                <span class="comment">// Parse the incoming request
+                </span><span class="kw">let </span>request: MatchmakerRequest = postcard::from_bytes(<span class="kw-2">&amp;</span>recv.read_to_end(<span class="number">256</span>).<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
-                <span class="comment">// Parse matchmaker request
-                </span><span class="kw">let </span>request: MatchmakerRequest =
-                    postcard::from_bytes(<span class="kw-2">&amp;</span>recv.read_to_end(<span class="number">256</span>).<span class="kw">await</span><span class="question-mark">?</span>)<span class="question-mark">?</span>;
-
-                <span class="kw">match </span>request {
-                    MatchmakerRequest::RequestMatch(match_info) =&gt; {
-                        <span class="macro">debug!</span>(connection_id, <span class="question-mark">?</span>match_info, <span class="string">&quot;Got request for match&quot;</span>);
-
-                        <span class="comment">// Accept request
-                        </span><span class="kw">let </span>message = postcard::to_allocvec(<span class="kw-2">&amp;</span>MatchmakerResponse::Accepted)<span class="question-mark">?</span>;
-                        send.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await</span><span class="question-mark">?</span>;
-                        send.finish().<span class="kw">await</span><span class="question-mark">?</span>;
-
-                        <span class="kw">let </span>player_count = match_info.client_count;
-
-                        <span class="kw">let </span><span class="kw-2">mut </span>members_to_join = Vec::new();
-                        <span class="kw">let </span><span class="kw-2">mut </span>members_to_notify = Vec::new();
-
-                        <span class="comment">// Make sure room exists
-                        </span>STATE
-                            .rooms
-                            .insert_async(match_info.clone(), Vec::new())
-                            .<span class="kw">await
-                            </span>.ok();
-
-                        STATE
-                            .rooms
-                            .update_async(<span class="kw-2">&amp;</span>match_info, |match_info, members| {
-                                <span class="comment">// Add the current client to the room
-                                </span>members.push(conn.clone());
-
-                                <span class="comment">// Spawn task to wait for connction to close and remove it from the room if it does
-                                </span><span class="kw">let </span>conn = conn.clone();
-                                <span class="kw">let </span>info = match_info.clone();
-                                IoTaskPool::get()
-                                    .spawn(<span class="kw">async move </span>{
-                                        conn.closed().<span class="kw">await</span>;
-                                        <span class="kw">let </span>members = STATE
-                                            .rooms
-                                            .update_async(<span class="kw-2">&amp;</span>info, |<span class="kw">_</span>, members| {
-                                                <span class="kw">let </span><span class="kw-2">mut </span>was_removed = <span class="bool-val">false</span>;
-                                                members.retain(|x| {
-                                                    <span class="kw">if </span>x.stable_id() != conn.stable_id() {
-                                                        <span class="bool-val">true
-                                                    </span>} <span class="kw">else </span>{
-                                                        was_removed = <span class="bool-val">true</span>;
-                                                        <span class="bool-val">false
-                                                    </span>}
-                                                });
-
-                                                <span class="kw">if </span>was_removed {
-                                                    <span class="prelude-val">Some</span>(members.clone())
-                                                } <span class="kw">else </span>{
-                                                    <span class="prelude-val">None
-                                                </span>}
-                                            })
-                                            .<span class="kw">await
-                                            </span>.flatten();
-                                        <span class="kw">if let </span><span class="prelude-val">Some</span>(members) = members {
-                                            <span class="kw">let </span>result = <span class="kw">async </span>{
-                                                <span class="kw">let </span>message = postcard::to_allocvec(
-                                                    <span class="kw-2">&amp;</span>MatchmakerResponse::ClientCount(
-                                                        members.len() <span class="kw">as </span>u8
-                                                    ),
-                                                )<span class="question-mark">?</span>;
-                                                <span class="kw">for </span>conn <span class="kw">in </span>members {
-                                                    <span class="kw">let </span><span class="kw-2">mut </span>send = conn.open_uni().<span class="kw">await</span><span class="question-mark">?</span>;
-                                                    send.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await</span><span class="question-mark">?</span>;
-                                                    send.finish().<span class="kw">await</span><span class="question-mark">?</span>;
-                                                }
-                                                <span class="prelude-val">Ok</span>::&lt;(), anyhow::Error&gt;(())
-                                            };
-                                            result.<span class="kw">await</span>.ok();
-                                        }
-                                    })
-                                    .detach();
-
-                                <span class="kw">let </span>member_count = members.len();
-
-                                <span class="comment">// If we have a complete room
-                                </span><span class="macro">debug!</span>(
-                                    <span class="question-mark">?</span>match_info,
-                                    <span class="string">&quot;Room now has {}/{} members&quot;</span>, member_count, player_count
-                                );
-
-                                <span class="kw">if </span>member_count &gt;= player_count <span class="kw">as _ </span>{
-                                    <span class="comment">// Clear the room
-                                    </span>members_to_join.append(members);
-                                } <span class="kw">else </span>{
-                                    members_to_notify = members.clone();
-                                }
-                            })
-                            .<span class="kw">await</span>;
-
-                        <span class="kw">if </span>!members_to_notify.is_empty() {
-                            <span class="kw">let </span>message = postcard::to_allocvec(<span class="kw-2">&amp;</span>MatchmakerResponse::ClientCount(
-                                members_to_notify.len() <span class="kw">as </span>u8,
-                            ))<span class="question-mark">?</span>;
-                            <span class="kw">for </span>conn <span class="kw">in </span>members_to_notify {
-                                <span class="kw">let </span><span class="kw-2">mut </span>send = conn.open_uni().<span class="kw">await</span><span class="question-mark">?</span>;
-                                send.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await</span><span class="question-mark">?</span>;
-                                send.finish().<span class="kw">await</span><span class="question-mark">?</span>;
-                            }
-                        }
-
-                        <span class="kw">if </span>!members_to_join.is_empty() {
-                            <span class="comment">// Send the match ID to all of the clients in the room
-                            </span><span class="kw">let </span><span class="kw-2">mut </span>clients = Vec::with_capacity(player_count <span class="kw">as </span>usize);
-                            <span class="kw">let </span>random_seed = rand::random();
-                            <span class="kw">for </span>(idx, conn) <span class="kw">in </span>members_to_join.drain(..).enumerate() {
-                                <span class="comment">// Respond with success
-                                </span><span class="kw">let </span>message =
-                                    postcard::to_allocvec(<span class="kw-2">&amp;</span>MatchmakerResponse::Success {
-                                        random_seed,
-                                        client_count: player_count,
-                                        player_idx: idx <span class="kw">as </span>u8,
-                                    })<span class="question-mark">?</span>;
-                                <span class="kw">let </span><span class="kw-2">mut </span>send = conn.open_uni().<span class="kw">await</span><span class="question-mark">?</span>;
-                                send.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await</span><span class="question-mark">?</span>;
-                                send.finish().<span class="kw">await</span><span class="question-mark">?</span>;
-
-                                clients.push(conn);
-                            }
-
-                            <span class="comment">// Hand the clients off to the game manager
-                            </span>start_proxy(match_info, clients).<span class="kw">await</span>;
-                        }
+                <span class="comment">// Route the request to the appropriate handler
+                </span><span class="kw">match </span>request {
+                    MatchmakerRequest::RequestMatchmaking(match_info) =&gt; {
+                        handle_request_matchaking(ep.clone(), conn.clone(), match_info, <span class="kw-2">&amp;mut </span>send).<span class="kw">await</span><span class="question-mark">?</span>;
+                        send.finish()<span class="question-mark">?</span>;
+                        send.stopped().<span class="kw">await</span><span class="question-mark">?</span>;
+                    }
+                    MatchmakerRequest::StopMatchmaking(match_info) =&gt; {
+                        handle_stop_matchmaking(conn.clone(), match_info, <span class="kw-2">&amp;mut </span>send).<span class="kw">await</span><span class="question-mark">?</span>;
+                    }
+                    MatchmakerRequest::ListLobbies(game_id) =&gt; {
+                        handle_list_lobbies(game_id, <span class="kw-2">&amp;mut </span>send).<span class="kw">await</span><span class="question-mark">?</span>;
+                    }
+                    MatchmakerRequest::CreateLobby(lobby_info) =&gt; {
+                        handle_create_lobby(conn.clone(), lobby_info, <span class="kw-2">&amp;mut </span>send).<span class="kw">await</span><span class="question-mark">?</span>;
+                    }
+                    MatchmakerRequest::JoinLobby(game_id, lobby_id, password) =&gt; {
+                        handle_join_lobby(ep.clone(), conn.clone(), game_id, lobby_id, password, <span class="kw-2">&amp;mut </span>send).<span class="kw">await</span><span class="question-mark">?</span>;
                     }
                 }
             }
         }
     }
+}
+
+<span class="doccomment">/// Starts a match/lobby with the given members
+</span><span class="kw">pub async fn </span>start_game(
+    ep: Endpoint,
+    members: Vec&lt;Connection&gt;,
+    match_info: <span class="kw-2">&amp;</span>MatchInfo,
+) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">let </span>random_seed = generate_random_seed();
+    <span class="kw">let </span><span class="kw-2">mut </span>player_ids = Vec::new();
+    <span class="kw">let </span>player_count = members.len();
+
+    <span class="comment">// Generate player indices based on the PlayerIdxAssignment
+    </span><span class="kw">let </span>player_indices = <span class="kw">match </span><span class="kw-2">&amp;</span>match_info.player_idx_assignment {
+        PlayerIdxAssignment::Ordered =&gt; (<span class="number">0</span>..player_count).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+        PlayerIdxAssignment::Random =&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>indices: Vec&lt;<span class="kw">_</span>&gt; = (<span class="number">0</span>..player_count).collect();
+            <span class="kw">let </span><span class="kw-2">mut </span>rng = rand::rngs::StdRng::seed_from_u64(random_seed);
+            indices.shuffle(<span class="kw-2">&amp;mut </span>rng);
+            indices
+        }
+        PlayerIdxAssignment::SpecifiedOrder(order) =&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>indices = order.clone();
+            <span class="kw">match </span>indices.len().cmp(<span class="kw-2">&amp;</span>player_count) {
+                Ordering::Less =&gt; {
+                    indices.extend(indices.len()..player_count);
+                }
+                Ordering::Greater =&gt; {
+                    indices.truncate(player_count);
+                }
+                <span class="kw">_ </span>=&gt; (),
+            }
+            indices
+        }
+    };
+
+    <span class="comment">// Collect player IDs and addresses
+    </span><span class="kw">for </span>(conn_idx, conn) <span class="kw">in </span>members.iter().enumerate() {
+        <span class="kw">let </span>id = iroh_net::endpoint::get_remote_node_id(conn)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>addr = NodeAddr::new(id);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(info) = ep.remote_info(id) {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(relay_url) = info.relay_url {
+                addr = addr.with_relay_url(relay_url.relay_url);
+            }
+            addr = addr.with_direct_addresses(info.addrs.into_iter().map(|addr| addr.addr));
+        }
+        <span class="kw">let </span>player_idx = player_indices[conn_idx];
+        player_ids.push((player_idx <span class="kw">as </span>u32, addr));
+    }
+
+    <span class="comment">// Sort player_ids by the assigned player index
+    </span>player_ids.sort_by_key(|<span class="kw-2">&amp;</span>(idx, <span class="kw">_</span>)| idx);
+
+    <span class="comment">// Send match information to each player
+    </span><span class="kw">for </span>(conn_idx, conn) <span class="kw">in </span>members.into_iter().enumerate() {
+        <span class="kw">let </span>player_idx = player_indices[conn_idx];
+        <span class="kw">let </span>message = postcard::to_allocvec(<span class="kw-2">&amp;</span>MatchmakerResponse::Success {
+            random_seed,
+            player_count: player_ids.len() <span class="kw">as </span>u32,
+            player_idx: player_idx <span class="kw">as </span>u32,
+            player_ids: player_ids.clone(),
+        })<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>send = conn.open_uni().<span class="kw">await</span><span class="question-mark">?</span>;
+        send.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await</span><span class="question-mark">?</span>;
+        send.finish()<span class="question-mark">?</span>;
+        send.stopped().<span class="kw">await</span><span class="question-mark">?</span>;
+        conn.close(<span class="number">0u32</span>.into(), <span class="string">b"done"</span>);
+    }
+
+    <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

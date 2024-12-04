@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `framework_crates/bones_ecs/src/stage.rs`."><title>stage.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bones_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `framework_crates/bones_ecs/src/stage.rs`."><title>stage.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bones_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -312,6 +312,52 @@
 <a href="#312" id="312">312</a>
 <a href="#313" id="313">313</a>
 <a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Implementation of stage abstraction for running collections of systems over a [`World`].
 
 </span><span class="kw">use </span>std::collections::VecDeque;
@@ -333,10 +379,13 @@
     </span><span class="kw">pub </span>has_started: bool,
     <span class="doccomment">/// The systems that should run at startup.
     </span><span class="kw">pub </span>startup_systems: Vec&lt;StaticSystem&lt;(), ()&gt;&gt;,
+    <span class="doccomment">/// Systems that are continously run until they succeed(return Some). These run before all stages. Uses Option to allow for easy usage of `?`.
+    </span><span class="kw">pub </span>single_success_systems: Vec&lt;StaticSystem&lt;(), <span class="prelude-ty">Option</span>&lt;()&gt;&gt;&gt;,
 }
+
 <span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>SystemStages {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        f.debug_struct(<span class="string">&quot;SystemStages&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        f.debug_struct(<span class="string">"SystemStages"</span>)
             <span class="comment">// TODO: Add list of stages to the debug render for `SystemStages`.
             // We can at least list the names of each stage for `SystemStages` debug
             // implementation.
@@ -353,7 +402,7 @@
 <span class="kw">impl </span>SystemStages {
     <span class="doccomment">/// Execute the systems on the given `world`.
     </span><span class="kw">pub fn </span>run(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World) {
-        <span class="comment">// If we haven&#39;t run our startup systems yet
+        <span class="comment">// If we haven't run our startup systems yet
         </span><span class="kw">if </span>!<span class="self">self</span>.has_started {
             <span class="comment">// Set the current stage resource
             </span>world.insert_resource(CurrentSystemStage(Ulid(<span class="number">0</span>)));
@@ -364,9 +413,15 @@
                 </span>system.run(world, ());
             }
 
-            <span class="comment">// Don&#39;t run startup systems again
+            <span class="comment">// Don't run startup systems again
             </span><span class="self">self</span>.has_started = <span class="bool-val">true</span>;
         }
+
+        <span class="comment">// Run single success systems
+        </span><span class="self">self</span>.single_success_systems.retain_mut(|system| {
+            <span class="kw">let </span>result = system.run(world, ());
+            result.is_none() <span class="comment">// Keep the system if it didn't succeed (returned None)
+        </span>});
 
         <span class="comment">// Run each stage
         </span><span class="kw">for </span>stage <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.stages {
@@ -396,6 +451,7 @@
             ],
             has_started: <span class="bool-val">false</span>,
             startup_systems: default(),
+            single_success_systems: Vec::new(),
         }
     }
 
@@ -405,6 +461,15 @@
         </span>S: IntoSystem&lt;Args, (), (), Sys = StaticSystem&lt;(), ()&gt;&gt;,
     {
         <span class="self">self</span>.startup_systems.push(system.system());
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Add a system that will run each frame until it succeeds (returns Some). Runs before all stages. Uses Option to allow for easy usage of `?`.
+    </span><span class="kw">pub fn </span>add_single_success_system&lt;Args, S&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, system: S) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self
+    </span><span class="kw">where
+        </span>S: IntoSystem&lt;Args, (), <span class="prelude-ty">Option</span>&lt;()&gt;, Sys = StaticSystem&lt;(), <span class="prelude-ty">Option</span>&lt;()&gt;&gt;&gt;,
+    {
+        <span class="self">self</span>.single_success_systems.push(system.system());
         <span class="self">self
     </span>}
 
@@ -424,7 +489,7 @@
         }
 
         <span class="kw">let </span><span class="prelude-val">Some</span>(stage) = stage <span class="kw">else </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;Stage with label `{}` ( {} ) doesn&#39;t exist.&quot;</span>, name, id);
+            <span class="macro">panic!</span>(<span class="string">"Stage with label `{}` ( {} ) doesn't exist."</span>, name, id);
         };
 
         stage.add_system(system.system());
@@ -434,7 +499,7 @@
 
     <span class="doccomment">/// Insert a new stage, before another existing stage
     </span><span class="attr">#[track_caller]
-    </span><span class="kw">pub fn </span>insert_stage_before&lt;L: StageLabel, S: SystemStage + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>insert_stage_before&lt;L: StageLabel, S: SystemStage + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         label: L,
         stage: S,
@@ -443,7 +508,7 @@
             </span>.stages
             .iter()
             .position(|x| x.id() == label.id())
-            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;Could not find stage with label `{}`&quot;</span>, label.name()));
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"Could not find stage with label `{}`"</span>, label.name()));
         <span class="self">self</span>.stages.insert(stage_idx, Box::new(stage));
 
         <span class="self">self
@@ -451,7 +516,7 @@
 
     <span class="doccomment">/// Insert a new stage, after another existing stage
     </span><span class="attr">#[track_caller]
-    </span><span class="kw">pub fn </span>insert_stage_after&lt;L: StageLabel, S: SystemStage + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>insert_stage_after&lt;L: StageLabel, S: SystemStage + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         label: L,
         stage: S,
@@ -460,11 +525,32 @@
             </span>.stages
             .iter()
             .position(|x| x.id() == label.id())
-            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;Could not find stage with label `{}`&quot;</span>, label.name()));
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"Could not find stage with label `{}`"</span>, label.name()));
         <span class="self">self</span>.stages.insert(stage_idx + <span class="number">1</span>, Box::new(stage));
 
         <span class="self">self
     </span>}
+
+    <span class="doccomment">/// Remove all systems from all stages, including startup and single success systems. Resets has_started as well, allowing for startup systems to run once again.
+    </span><span class="kw">pub fn </span>reset_remove_all_systems(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="comment">// Reset the has_started flag
+        </span><span class="self">self</span>.has_started = <span class="bool-val">false</span>;
+        <span class="self">self</span>.remove_all_systems();
+    }
+
+    <span class="doccomment">/// Remove all systems from all stages, including startup and single success systems. Does not reset has_started.
+    </span><span class="kw">pub fn </span>remove_all_systems(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="comment">// Clear startup systems
+        </span><span class="self">self</span>.startup_systems.clear();
+
+        <span class="comment">// Clear single success systems
+        </span><span class="self">self</span>.single_success_systems.clear();
+
+        <span class="comment">// Clear systems from each stage
+        </span><span class="kw">for </span>stage <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.stages {
+            stage.remove_all_systems();
+        }
+    }
 }
 
 <span class="doccomment">/// Trait for system stages. A stage is a
@@ -478,6 +564,8 @@
 
     <span class="doccomment">/// Add a system to this stage.
     </span><span class="kw">fn </span>add_system(<span class="kw-2">&amp;mut </span><span class="self">self</span>, system: StaticSystem&lt;(), ()&gt;);
+    <span class="doccomment">/// Remove all systems from this stage.
+    </span><span class="kw">fn </span>remove_all_systems(<span class="kw-2">&amp;mut </span><span class="self">self</span>);
 }
 
 <span class="doccomment">/// A collection of systems that will be run in order.
@@ -530,6 +618,10 @@
     <span class="kw">fn </span>add_system(<span class="kw-2">&amp;mut </span><span class="self">self</span>, system: StaticSystem&lt;(), ()&gt;) {
         <span class="self">self</span>.systems.push(system);
     }
+
+    <span class="kw">fn </span>remove_all_systems(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.systems.clear();
+    }
 }
 
 <span class="doccomment">/// Trait for things that may be used to identify a system stage.
@@ -557,7 +649,7 @@
 
 <span class="kw">impl </span>StageLabel <span class="kw">for </span>CoreStage {
     <span class="kw">fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>)
+        <span class="macro">format!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>)
     }
 
     <span class="kw">fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Ulid {
@@ -588,8 +680,8 @@
             }
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>(
-                <span class="string">&quot;Cannot clone CommandQueue. This probably happened because you are \
-                trying to clone a World while a system stage is still executing.&quot;
+                <span class="string">"Cannot clone CommandQueue. This probably happened because you are \
+                trying to clone a World while a system stage is still executing."
             </span>)
         }
     }
@@ -610,11 +702,11 @@
 ///
 /// This is a shortcut for [`ResMut&lt;CommandQueue&gt;`].
 </span><span class="attr">#[derive(Deref, DerefMut)]
-</span><span class="kw">pub struct </span>Commands&lt;<span class="lifetime">&#39;a</span>&gt;(RefMut&lt;<span class="lifetime">&#39;a</span>, CommandQueue&gt;);
+</span><span class="kw">pub struct </span>Commands&lt;<span class="lifetime">'a</span>&gt;(RefMut&lt;<span class="lifetime">'a</span>, CommandQueue&gt;);
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; SystemParam <span class="kw">for </span>Commands&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; SystemParam <span class="kw">for </span>Commands&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>State = AtomicResource&lt;CommandQueue&gt;;
-    <span class="kw">type </span>Param&lt;<span class="lifetime">&#39;s</span>&gt; = Commands&lt;<span class="lifetime">&#39;s</span>&gt;;
+    <span class="kw">type </span>Param&lt;<span class="lifetime">'s</span>&gt; = Commands&lt;<span class="lifetime">'s</span>&gt;;
 
     <span class="kw">fn </span>get_state(world: <span class="kw-2">&amp;</span>World) -&gt; <span class="self">Self</span>::State {
         <span class="kw">let </span>cell = world.resources.get_cell::&lt;CommandQueue&gt;();
@@ -622,7 +714,7 @@
         cell
     }
 
-    <span class="kw">fn </span>borrow&lt;<span class="lifetime">&#39;s</span>&gt;(_world: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>World, state: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span><span class="kw-2">mut </span><span class="self">Self</span>::State) -&gt; <span class="self">Self</span>::Param&lt;<span class="lifetime">&#39;s</span>&gt; {
+    <span class="kw">fn </span>borrow&lt;<span class="lifetime">'s</span>&gt;(_world: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>World, state: <span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="kw-2">mut </span><span class="self">Self</span>::State) -&gt; <span class="self">Self</span>::Param&lt;<span class="lifetime">'s</span>&gt; {
         Commands(state.borrow_mut().unwrap())
     }
 }
